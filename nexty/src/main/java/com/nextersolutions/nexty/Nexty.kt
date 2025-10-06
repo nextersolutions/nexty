@@ -5,8 +5,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 object Nexty {
+    private val lock = Object()
     private val pairs = mutableMapOf<String, Any?>()
+        get() = synchronized(lock) { field }
+    
     private val mutablePairs = mutableMapOf<String, MutableStateFlow<Any?>>()
+        get() = synchronized(lock) { field }
 
     fun put(key: String, value: Any?) {
         pairs[key] = value
