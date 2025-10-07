@@ -78,7 +78,6 @@ fun Navigator() {
         composable<Route.ViewFood> { entry ->
             val route = entry.toRoute<Route.ViewFood>()
             val item = Nexty.get<FoodViewData>(route.id)
-
             if (item != null) {
                 ItemScreen(
                     item = item,
