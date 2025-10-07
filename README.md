@@ -17,7 +17,7 @@ Add the JitPack repository to your `settings.gradle.kts` file:
 dependencyResolutionManagement {
     repositories {
         // ...
-        maven { url = uri("[https://jitpack.io](https://jitpack.io)") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ```
