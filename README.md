@@ -14,7 +14,7 @@ pairs.
 Add the JitPack repository to your `settings.gradle.kts` file:
 
 ```kotlin
-    dependencyResolutionManagement {
+dependencyResolutionManagement {
     repositories {
         // ...
         maven { url = uri("[https://jitpack.io](https://jitpack.io)") }
@@ -25,7 +25,7 @@ Add the JitPack repository to your `settings.gradle.kts` file:
 Add the dependency to your app's build.gradle.kts file:
 
 ```kotlin
-    dependencies {
+dependencies {
     implementation("com.github.nextersolutions:nexty:1.0.0")
 }
 ```
@@ -38,7 +38,7 @@ static data key-value pair usage:
 Imagine you have model, that declares some data about food:
 
 ```kotlin
-    data class FoodViewData(
+data class FoodViewData(
     val id: String,
     val imageUrl: String,
     val description: String
@@ -48,7 +48,7 @@ Imagine you have model, that declares some data about food:
 You have these graph of routes:
 
 ```kotlin
-    @Serializable
+@Serializable
 sealed class Route {
     @Serializable
     data object Main : Route()
@@ -61,7 +61,7 @@ sealed class Route {
 You want to pass it as a param from one screen to another:
 
 ```kotlin
-    composable<Route.Main> {
+composable<Route.Main> {
     ItemsScreen(
         onViewItem = { item: FoodViewData ->
             // put into Nexty
@@ -80,7 +80,7 @@ You want to pass it as a param from one screen to another:
 In the respective route:
 
 ```kotlin
-    composable<Route.ViewFood> { entry ->
+composable<Route.ViewFood> { entry ->
     // convert the NavBackStackEntry into your route (according to docs)
     val route = entry.toRoute<Route.ViewFood>()
 
@@ -99,7 +99,7 @@ In the respective route:
 To use the Nexty for storing data as flow you can use `putMutable` method.
 
 ```kotlin
-    val item: FoodViewData = ...
+val item: FoodViewData = ...
 
 Nexty.putMutable(item.id, item)
 ```
@@ -107,7 +107,7 @@ Nexty.putMutable(item.id, item)
 And to get the data as flow use the `getAsFlow` method:
 
 ```kotlin
-    viewModelScope.launch {
+viewModelScope.launch {
     Nexty
         .getAsFlow(id)
         .collectLatest {
