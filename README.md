@@ -4,7 +4,7 @@ Nexty is a lightweight library that allows to pass data between screens without 
 
 It stores data in memory and they are accessible while app is alive.
 
-Data are not stored into any local DB and are accessible in the runtime only.
+Data is not stored into any local DB and are accessible in the runtime only.
 
 Passing data between screens is thread-safe, because Nexty provides synchronized access to the data
 pairs.
@@ -119,6 +119,7 @@ viewModelScope.launch {
 }
 ```
 
-In case you put the new value to the existing mutable flow, flow won't be recreated but new value
+In case you put the new value to the existing mutable flow, flow won't be recreated but the new
+value
 will be emitted into it.
 
