@@ -8,7 +8,7 @@ object Nexty {
     private val lock = Object()
     private val pairs = mutableMapOf<String, Any?>()
         get() = synchronized(lock) { field }
-    
+
     private val mutablePairs = mutableMapOf<String, MutableStateFlow<Any?>>()
         get() = synchronized(lock) { field }
 
@@ -23,6 +23,16 @@ object Nexty {
             value as? T
         } catch (_: Exception) {
             null
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getOrDefault(key: String, default: T): T {
+        val value = pairs.getOrDefault(key, null)
+        return try {
+            (value as? T) ?: default
+        } catch (_: Exception) {
+            default
         }
     }
 
