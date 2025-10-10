@@ -1,4 +1,4 @@
-# Nexty - Real-time Android in-memory datastore
+# Nexty - Real-time Android in-memory datastore [![](https://jitpack.io/v/nextersolutions/nexty.svg)](https://jitpack.io/#nextersolutions/nexty)
 
 Nexty is a lightweight library that allows to pass data between screens without serialization.
 
