@@ -37,6 +37,29 @@ object Nexty {
     }
 
     @Suppress("UNCHECKED_CAST")
+    fun <T> remove(key: String): T? {
+        val value = pairs.remove(key)
+        return try {
+            value as? T
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    /**
+     * Silently deletes the key and value if exists
+     */
+    fun delete(key: String) {
+        pairs.remove(key)
+    }
+
+    /**
+     * Put mutable value: if flow for key exists, emits the value to the flow;
+     * otherwise creates new flow with the value provided.
+     *
+     * @return flow with value
+     */
+    @Suppress("UNCHECKED_CAST")
     fun putMutable(key: String, value: Any?): Flow<Any?> {
         var old = mutablePairs.getOrDefault(key, null)
         if (old == null) {
@@ -49,6 +72,9 @@ object Nexty {
         return old.asSharedFlow()
     }
 
+    /**
+     * @return flow for the key, if exists. Otherwise returns null
+     */
     fun getAsFlow(key: String): Flow<Any?>? {
         return mutablePairs.getOrDefault(key, null)?.asSharedFlow()
     }
