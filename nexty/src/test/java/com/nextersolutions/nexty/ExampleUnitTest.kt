@@ -1,17 +1,33 @@
 package com.nextersolutions.nexty
 
+import junit.framework.TestCase.assertEquals
+import org.junit.Assert
 import org.junit.Test
 
-import org.junit.Assert.*
-
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun get_or_default_is_correct() {
+        val result = Nexty.getOrDefault("key", null)
+        Assert.assertNull(result)
+    }
+
+    @Test
+    fun key_remove_is_correct() {
+        val key = "key"
+        val value = "value"
+        Nexty.put(key, value)
+
+        val old = Nexty.remove<String>(key)
+        assertEquals(value, old)
+    }
+
+    @Test
+    fun key_delete_is_correct() {
+        val key = "key"
+        val value = "value"
+        Nexty.put(key, value)
+        Nexty.delete(key)
+        val old = Nexty.get<String>(key)
+        assertEquals(null, old)
     }
 }
