@@ -47,6 +47,47 @@ object Nexty {
     }
 
     /**
+     * Allows to put with 2 keys
+     */
+    fun put(key1: String, key2: String, value: Any?) {
+        val key = key1 + "_" + key2
+        pairs[key] = value
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> get(key1: String, key2: String): T? {
+        val key = key1 + "_" + key2
+        val value = pairs.getOrDefault(key, null)
+        return try {
+            value as? T
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getOrDefault(key1: String, key2: String, default: T): T {
+        val key = key1 + "_" + key2
+        val value = pairs.getOrDefault(key, null)
+        return try {
+            (value as? T) ?: default
+        } catch (_: Exception) {
+            default
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> remove(key1: String, key2: String): T? {
+        val key = key1 + "_" + key2
+        val value = pairs.remove(key)
+        return try {
+            value as? T
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    /**
      * Silently deletes the key and value if exists
      */
     fun delete(key: String) {
