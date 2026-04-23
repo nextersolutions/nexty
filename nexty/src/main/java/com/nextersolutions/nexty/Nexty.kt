@@ -114,9 +114,28 @@ object Nexty {
     }
 
     /**
-     * @return flow for the key, if exists. Otherwise returns null
+     * @return flow for the key, if exists. Otherwise, returns null
      */
     fun getAsFlow(key: String): Flow<Any?>? {
         return mutablePairs.getOrDefault(key, null)?.asSharedFlow()
+    }
+
+    /**
+     * Clears everything except mutable pairs
+     */
+    fun clear() {
+        pairs.clear()
+    }
+
+    /**
+     * Clear mutable pairs only
+     */
+    fun clearMutable() {
+        mutablePairs.clear()
+    }
+
+    fun clearAll() {
+        pairs.clear()
+        mutablePairs.clear()
     }
 }
