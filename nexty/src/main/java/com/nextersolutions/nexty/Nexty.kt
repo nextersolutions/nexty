@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 object Nexty {
-    private val lock = Object()
+    private val lock = Any()
     private val pairs = mutableMapOf<String, Any?>()
         get() = synchronized(lock) { field }
 
@@ -17,7 +17,7 @@ object Nexty {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> get(key: String): T? {
+    operator fun <T> get(key: String): T? {
         val value = pairs.getOrDefault(key, null)
         return try {
             value as? T
@@ -33,6 +33,38 @@ object Nexty {
             (value as? T) ?: default
         } catch (_: Exception) {
             default
+        }
+    }
+
+    suspend inline fun <reified T> getOrElse(
+        key: String,
+        crossinline ifNull: suspend () -> T?
+    ): T? {
+        val value = this.get<T>(key)
+
+        return when (value != null) {
+            true -> {
+                put(key, value)
+                value
+            }
+
+            false -> ifNull.invoke()
+        }
+    }
+
+    inline fun <reified T> getOrElse(
+        key: String,
+        crossinline ifNull: () -> T?
+    ): T? {
+        val value = this.get<T>(key)
+
+        return when (value != null) {
+            true -> {
+                put(key, value)
+                value
+            }
+
+            false -> ifNull.invoke()
         }
     }
 
