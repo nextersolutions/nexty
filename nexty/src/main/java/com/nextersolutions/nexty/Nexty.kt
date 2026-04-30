@@ -52,22 +52,6 @@ object Nexty {
         }
     }
 
-    inline fun <reified T> getOrElse(
-        key: String,
-        crossinline ifNull: () -> T?
-    ): T? {
-        val value = this.get<T>(key)
-
-        return when (value != null) {
-            true -> {
-                put(key, value)
-                value
-            }
-
-            false -> ifNull.invoke()
-        }
-    }
-
     @Suppress("UNCHECKED_CAST")
     fun <T> remove(key: String): T? {
         val value = pairs.remove(key)
